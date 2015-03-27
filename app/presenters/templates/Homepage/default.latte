@@ -1,0 +1,80 @@
+{block content}
+	<div style="background: #fff; padding: 20px 30px; border-radius: 4px;">
+		<table>
+			<tr>
+				<td style="width:100px"><span style="font-weight:bold;color:red">WRONG</span></td>
+				<td style="width:200px">{$mail1|email}</td>
+				<td>Without protection.</td>
+			</tr>
+			<tr>
+				<td style="width:100px"><span style="font-weight:bold;color:red">WRONG</span></td>
+				<td>{$mail2|email:"javascript"}</td>
+				<td>Javascript protection - easy to parse.</td>
+			</tr>
+			<tr>
+				<td style="width:100px"><span style="font-weight:bold;color:red">WRONG</span></td>
+				<td>{$mail3|email:"javascript_charcode"}</td>
+				<td>Another Javascript protection (charcode) - easy to parse.</td>
+			</tr>
+			<tr>
+				<td style="width:100px"><span style="font-weight:bold;color:red">WRONG</span></td>
+				<td>{$mail4|email:"hex"|noescape}</td>
+				<td>Another Javascript protection (HEX) - easy to parse.</td>
+			</tr>
+			<tr>
+				<td style="width:100px"><span style="font-weight:bold;color:red">WRONG</span></td>
+				<td>{$mail5|email:"javascript":"link to my email here"}</td>
+				<td>Javascript protection - easy to parse.</td>
+			</tr>
+			<tr>
+				<td style="width:100px"><span style="font-weight:bold;color:red">WRONG</span></td>
+				<td>{$mail6|email:"drupal"}</td>
+				<td>Naive protection (Drupal) - easy to parse.</td>
+			</tr>
+			<tr>
+				<td style="width:100px"><span style="font-weight:bold;color:red">WRONG</span></td>
+				<td>{$mail7|email:"texy"}</td>
+				<td>Naive protection (Texy) - easy to parse.</td>
+			</tr>
+			<tr>
+				<td><span style="font-weight:bold;color:green">GOOD</span></td>
+				<td><a id="protected">Loading...</a></td>
+				<td>Loaded via AJAX call.</td>
+			</tr>
+		</table>
+		<script>
+			$(function () {
+				$.nette.ajax({
+					url: {link getEmail!},
+					success: function (payload) {
+						console.log(payload.emailLink);
+						$('#protected').replaceWith(payload.emailLink);
+					}
+				});
+			});
+		</script>
+	</div>
+{/block}
+
+{block head}
+	<style>
+		body {
+			font: 14px/1.65 Verdana, "Geneva CE", lucida, sans-serif;
+			background: #3484d2;
+			color: #333;
+			margin: 38px auto;
+			max-width: 940px;
+			min-width: 420px;
+		}
+		a {
+			color: #006aeb;
+			padding: 3px 1px;
+		}
+
+		a:hover, a:active, a:focus {
+			background-color: #006aeb;
+			text-decoration: none;
+			color: white;
+		}
+	</style>
+{/block}
